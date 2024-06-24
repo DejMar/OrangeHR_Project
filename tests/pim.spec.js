@@ -12,7 +12,7 @@ test.describe('Employee related tests', () => {
         pimPage = new PIMPage(page)
     })
 
-    test.only('Verify Added Employee', async ({}) => {
+    test.only('Verify Added Employee test', async ({}) => {
         await loginPage.loginToPage(adminDetails.username, adminDetails.password)
         await pimPage.clickOnPIMLink()
         await pimPage.clickOnAddButton()
