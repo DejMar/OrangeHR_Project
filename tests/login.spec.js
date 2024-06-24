@@ -28,7 +28,7 @@ test.describe('Login tests', () => {
     await loginPage.loginToPage("", adminDetails.password)
     await loginPage.verifyRequiredUsernameMessage()
   })
-  test('Required password fields Login', async ({ page }) => {
+  test('Required password fields Login.', async ({ page }) => {
     await loginPage.loginToPage(adminDetails.username, "")
     await loginPage.verifyRequiredPasswordMessage()
   })
