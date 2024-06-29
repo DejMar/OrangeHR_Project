@@ -52,7 +52,7 @@ export class PIMPage {
         console.log(jobTitle);
         return jobTitle;
     }
-    selectFromDropdown = async (locator) => {
+    selectRandomOptionFromDropdown = async (locator) => {
         //await this.page.pause()
         await this.page.waitForTimeout(3000)
         //await this.subUnitDropDown.click()
@@ -72,17 +72,33 @@ export class PIMPage {
         }*/
        //await this.page.pause()
     }
+    selectSpecificOptionFromDropdown = async (locator, selectOption) => {
+        //await this.page.pause()
+        await this.page.waitForTimeout(3000)
+        //await this.subUnitDropDown.click()
+        await locator.click()
+        const options = await this.page.$$("//div[@role='listbox']//span")
+        for (let option of options) {
+            const jobTitle = await option.textContent()
+            console.log(jobTitle)
+            if (jobTitle == selectOption) {
+                await option.click()
+                break
+            }
+        }
+       //await this.page.pause()
+    }
     selectEmploymentStatus = async () => {
-        await this.selectFromDropdown(this.employmentStatusDropdown)
+        await this.selectRandomOptionFromDropdown(this.employmentStatusDropdown)
     }
     selectInclude = async () => {
-        await this.selectFromDropdown(this.includeDropdown)
+        await this.selectRandomOptionFromDropdown(this.includeDropdown)
     }
     selectSubUnit = async () => {
-        await this.selectFromDropdown(this.subUnitDropDown)
+        await this.selectRandomOptionFromDropdown(this.subUnitDropDown)
     }
     selectJobTitle = async () => {
-        await this.selectFromDropdown(this.jobTitleRoleDropdown)
+        await this.selectSpecificOptionFromDropdown(this.jobTitleRoleDropdown, "Account Assistant")
     }
 
     //#endregion
