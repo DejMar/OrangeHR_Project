@@ -13,7 +13,7 @@ export class PIMPage {
         this.employeeID = page.locator('form').getByRole('textbox').nth(4)
         this.employeeSaveButton = page.getByRole('button', { name: 'Save' })
         this.employeeCancelButton = page.getByRole('button', { name: 'Cancel' })
-        this.jobTitleRoleDropdown = page.locator("(//div[@class='oxd-select-text--after']//i)[3]")
+        this.jobTitleRoleDropdown = page.locator("//div[div[label[text()='Job Title']]]//div[@class='oxd-select-wrapper']")
         //this.dropdownValueNew = page.locator('form').filter({ hasText: 'Employee Full NameEmployee' }).locator('i').nth(2)
         this.employmentStatusDropdown = page.locator('form i').first()
         this.includeDropdown = page.locator('form i').nth(1)
@@ -88,17 +88,16 @@ export class PIMPage {
         }
        //await this.page.pause()
     }
-    selectEmploymentStatus = async () => {
-        await this.selectRandomOptionFromDropdown(this.employmentStatusDropdown)
-    }
-    selectInclude = async () => {
-        await this.selectRandomOptionFromDropdown(this.includeDropdown)
-    }
-    selectSubUnit = async () => {
-        await this.selectRandomOptionFromDropdown(this.subUnitDropDown)
-    }
-    selectJobTitle = async () => {
-        await this.selectSpecificOptionFromDropdown(this.jobTitleRoleDropdown, "Account Assistant")
+    
+    selectRandomJobTitleAndSave = async (DropdownName) => {
+        await this.page.waitForSelector('.oxd-select-text-input', { state: 'visible' });
+        await this.page.click(`//div[div[label[text()='${DropdownName}']]]//div[@class='oxd-select-wrapper']`); // Click to open the dropdown
+        await this.page.waitForSelector('.oxd-select-option span', { state: 'visible' });
+        const options = await this.page.$$eval('.oxd-select-option span', spans => spans.map(span => span.textContent.trim()));
+        const randomJobTitle = options[Math.floor(Math.random() * options.length)];
+        await this.page.click(`text=${randomJobTitle}`);
+        console.log(`Selected Job Title: ${randomJobTitle}`);
+        return randomJobTitle; // Save the randomly selected job title
     }
 
     //#endregion
