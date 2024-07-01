@@ -16,8 +16,8 @@ export class PIMPage {
         this.jobTitleRoleDropdown = page.locator("//div[div[label[text()='Job Title']]]//div[@class='oxd-select-wrapper']")
         //this.dropdownValueNew = page.locator('form').filter({ hasText: 'Employee Full NameEmployee' }).locator('i').nth(2)
         this.employmentStatusDropdown = page.locator('form i').first()
-        this.includeDropdown = page.locator('form i').nth(1)
-        this.subUnitDropDown = page.locator('form i').nth(3)
+        this.includeDropdown = page.locator("//div[div[label[text()='Job Title']]]//div[@class='oxd-select-wrapper']")
+        this.subUnitDropDown = page.locator("//div[div[label[text()='Sub Unit']]]//div[@class='oxd-select-wrapper']")
     }
     //#endregion
     //#region Methods
@@ -43,53 +43,8 @@ export class PIMPage {
         expect(await this.employeeLastName.inputValue()).toEqual(lastName)
         expect(await this.employeeID.inputValue()).toEqual(employeeID)
     }
-    dropdownvalue = async () => {
-        await this.dropdownOptions.click();
-        const options = await this.dropdownList;
-        const randomIndex = Math.floor(Math.random() * options.length);
-        const randomOption = options[randomIndex];
-        const jobTitle = await randomOption.textContent();
-        console.log(jobTitle);
-        return jobTitle;
-    }
-    selectRandomOptionFromDropdown = async (locator) => {
-        //await this.page.pause()
-        await this.page.waitForTimeout(3000)
-        //await this.subUnitDropDown.click()
-        await locator.click()
-        const options = await this.page.$$("//div[@role='listbox']//span")
-        const randomIndex = Math.floor(Math.random() * options.length);
-        await this.page.waitForTimeout(2000)
-        await options[randomIndex].click();
-        
-        /*for (let option of options) {
-            const jobTitle = await option.textContent()
-            console.log(jobTitle)
-            if (jobTitle == 'HR manager') {
-                await option.click()
-                break
-            }
-        }*/
-       //await this.page.pause()
-    }
-    selectSpecificOptionFromDropdown = async (locator, selectOption) => {
-        //await this.page.pause()
-        await this.page.waitForTimeout(3000)
-        //await this.subUnitDropDown.click()
-        await locator.click()
-        const options = await this.page.$$("//div[@role='listbox']//span")
-        for (let option of options) {
-            const jobTitle = await option.textContent()
-            console.log(jobTitle)
-            if (jobTitle == selectOption) {
-                await option.click()
-                break
-            }
-        }
-       //await this.page.pause()
-    }
     
-    selectRandomJobTitleAndSave = async (DropdownName) => {
+    selectRandomOptionAndSave = async (DropdownName) => {
         await this.page.waitForSelector('.oxd-select-text-input', { state: 'visible' });
         await this.page.click(`//div[div[label[text()='${DropdownName}']]]//div[@class='oxd-select-wrapper']`); // Click to open the dropdown
         await this.page.waitForSelector('.oxd-select-option span', { state: 'visible' });
@@ -97,7 +52,7 @@ export class PIMPage {
         const randomJobTitle = options[Math.floor(Math.random() * options.length)];
         await this.page.click(`text=${randomJobTitle}`);
         console.log(`Selected Job Title: ${randomJobTitle}`);
-        return randomJobTitle; // Save the randomly selected job title
+        return randomJobTitle; // Save the randomly selected option
     }
 
     //#endregion

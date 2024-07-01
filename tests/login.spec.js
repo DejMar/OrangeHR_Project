@@ -8,27 +8,27 @@ test.describe('Login tests', () => {
     loginPage = new LoginPage(page)
   })
 
-  test('Login to page', async ({ page }) => {
+  test('Login to page', async ({ }) => {
     await loginPage.loginToPage(adminDetails.username, adminDetails.password)
   })
-  test('Invalid Password Login', async ({ page }) => {
+  test('Invalid Password Login', async ({ }) => {
     await loginPage.loginToPage(adminDetails.username, adminDetails.invalidPassword)
     await loginPage.verifyInvalidLoginMessage()
   })
-  test('Invalid Username Login', async ({ page }) => {
+  test('Invalid Username Login', async ({ }) => {
     await loginPage.loginToPage(adminDetails.invalidUsername, adminDetails.password)
     await loginPage.verifyInvalidLoginMessage()
   })
-  test('Required all fields Login', async ({ page }) => {
+  test('Required all fields Login', async ({ }) => {
     await loginPage.loginToPage("", "")
     await loginPage.verifyRequiredUsernameMessage()
     await loginPage.verifyRequiredPasswordMessage()
   })
-  test('Required username fields Login', async ({ page }) => {
+  test('Required username fields Login', async ({ }) => {
     await loginPage.loginToPage("", adminDetails.password)
     await loginPage.verifyRequiredUsernameMessage()
   })
-  test('Required password fields Login.', async ({ page }) => {
+  test('Required password fields Login.', async ({ }) => {
     await loginPage.loginToPage(adminDetails.username, "")
     await loginPage.verifyRequiredPasswordMessage()
   })
