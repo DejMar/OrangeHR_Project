@@ -49,10 +49,10 @@ export class PIMPage {
         await this.page.click(`//div[div[label[text()='${DropdownName}']]]//div[@class='oxd-select-wrapper']`); // Click to open the dropdown
         await this.page.waitForSelector('.oxd-select-option span', { state: 'visible' });
         const options = await this.page.$$eval('.oxd-select-option span', spans => spans.map(span => span.textContent.trim()));
-        const randomJobTitle = options[Math.floor(Math.random() * options.length)];
-        await this.page.click(`text=${randomJobTitle}`);
-        console.log(`Selected Job Title: ${randomJobTitle}`);
-        return randomJobTitle; // Save the randomly selected option
+        const randomOption = options[Math.floor(Math.random() * options.length)];
+        await this.page.click(`text=${randomOption}`);
+        console.log(`Selected Job Title: ${randomOption}`);
+        return randomOption; // Save the randomly selected option
     }
 
     //#endregion
