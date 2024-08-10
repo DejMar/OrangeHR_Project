@@ -17,7 +17,7 @@ test.describe('Login tests', () => {
     }
   });
 
-  test('TC001 - Login to page', async ({ }) => {
+  test('TC001 - Login', async ({ }) => {
     await loginPage.loginToPage(adminDetails.username, adminDetails.password)
   })
   test('TC002 - Invalid Password Login', async ({ }) => {
