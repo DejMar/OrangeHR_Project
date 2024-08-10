@@ -4,31 +4,40 @@ import { adminDetails } from '../data/userDetails';
 
 test.describe('Login tests', () => {
   let loginPage
+
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page)
   })
 
-  test('Login to page', async ({ }) => {
+  test.afterEach(async ({ page }, testInfo) => {
+    if (testInfo.status !== 'passed') {
+      const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      console.log(`Screenshot saved: ${screenshotPath}`);
+    }
+  });
+
+  test('TC001 - Login to page', async ({ }) => {
     await loginPage.loginToPage(adminDetails.username, adminDetails.password)
   })
-  test('Invalid Password Login', async ({ }) => {
+  test('TC002 - Invalid Password Login', async ({ }) => {
     await loginPage.loginToPage(adminDetails.username, adminDetails.invalidPassword)
     await loginPage.verifyInvalidLoginMessage()
   })
-  test('Invalid Username Login', async ({ }) => {
+  test('TC003 - Invalid Username Login', async ({ }) => {
     await loginPage.loginToPage(adminDetails.invalidUsername, adminDetails.password)
     await loginPage.verifyInvalidLoginMessage()
   })
-  test('Required all fields Login', async ({ }) => {
+  test('TC004 - Required all fields Login', async ({ }) => {
     await loginPage.loginToPage("", "")
     await loginPage.verifyRequiredUsernameMessage()
     await loginPage.verifyRequiredPasswordMessage()
   })
-  test('Required username fields Login', async ({ }) => {
+  test('TC005 - Required username fields Login', async ({ }) => {
     await loginPage.loginToPage("", adminDetails.password)
     await loginPage.verifyRequiredUsernameMessage()
   })
-  test('Required password fields Login.', async ({ }) => {
+  test('TC006 - Required password fields Login.', async ({ }) => {
     await loginPage.loginToPage(adminDetails.username, "")
     await loginPage.verifyRequiredPasswordMessage()
   })
