@@ -17,17 +17,14 @@ test.describe('Employee related tests', () => {
     })
 
     test.afterEach(async ({ page }, testInfo) => {
-        if (testInfo.status !== 'passed') {
-          const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.png`;
-          await page.screenshot({ path: screenshotPath, fullPage: true });
-          console.log(`Screenshot saved: ${screenshotPath}`);
-        }
+        await sharedSteps.takeScreenshotOnFailure(page, testInfo);
       });
 
-    test.only('TC07 - Verify Added Employee test', async ({page}) => {
+    test('TC07 - Verify Added Employee test', async ({page}) => {
         await loginPage.loginToPage(adminDetails.username, adminDetails.password)
         await pimPage.clickOnPIMLink()
-        await sharedSteps.selectRandomOptionAndSave('Job Title')
+        const jobTitle = await sharedSteps.selectRandomOptionAndSave('Job Title')
+        console.log('Job Title', jobTitle)
         await sharedSteps.selectRandomOptionAndSave('Include')
         await sharedSteps.selectRandomOptionAndSave('Sub Unit')
         await sharedSteps.selectRandomOptionAndSave('Employment Status')

@@ -1,20 +1,21 @@
 import { LoginPage } from '../page-object/loginPage';
 import { test } from "@playwright/test"
 import { adminDetails } from '../data/userDetails';
+import { SharedSteps } from "../helper/SharedSteps";
+
 
 test.describe('Login tests', () => {
   let loginPage
+  let sharedSteps
+
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page)
+    sharedSteps = new SharedSteps(page)
   })
 
   test.afterEach(async ({ page }, testInfo) => {
-    if (testInfo.status !== 'passed') {
-      const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.png`;
-      await page.screenshot({ path: screenshotPath, fullPage: true });
-      console.log(`Screenshot saved: ${screenshotPath}`);
-    }
+    await sharedSteps.takeScreenshotOnFailure(page, testInfo);
   });
 
   test('TC001 - Login', async ({ }) => {
