@@ -1,4 +1,4 @@
 export const warningMessages = {
     required: 'Required',
-    invalidCredentials: 'Invalid credentials'
-}
+    invalidCredentials: 'Invalid credentials',
+} as const;
