@@ -199,6 +199,10 @@ export class PIMPage {
         await this.employeeSaveButton.click();
     }
 
+    async clickOnCancelButton(): Promise<void> {
+        await this.employeeCancelButton.click();
+    }
+
     async verifyPopulatedData(firstName: string, middleName: string, lastName: string, employeeID: string): Promise<void> {
         await expect(this.employeeFirstName).toHaveValue(firstName);
         await expect(this.employeeMiddleName).toHaveValue(middleName);

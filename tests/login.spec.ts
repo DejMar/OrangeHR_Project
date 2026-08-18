@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import { LoginPage } from '../page-object/LoginPage';
-import { adminDetails } from '../data/userDetails';
 import { SharedSteps } from '../helper/SharedSteps';
+import { getLoginCase, getLoginCaseIds, getLoginCaseTitle } from '../data/testData';
 
 test.describe('Login tests', () => {
   let loginPage: LoginPage;
@@ -16,33 +16,26 @@ test.describe('Login tests', () => {
     await sharedSteps.takeScreenshotOnFailure(page, testInfo);
   });
 
-  test('TC001 - Login', async () => {
-    await loginPage.loginToPage(adminDetails.username, adminDetails.password);
-  });
+  for (const caseId of getLoginCaseIds()) {
+    test(getLoginCaseTitle(caseId), async () => {
+      const { username, password, expected } = getLoginCase(caseId);
+      await loginPage.loginToPage(username, password);
 
-  test('TC002 - Invalid Password Login', async () => {
-    await loginPage.loginToPage(adminDetails.username, adminDetails.invalidPassword);
-    await loginPage.verifyInvalidLoginMessage();
-  });
-
-  test('TC003 - Invalid Username Login', async () => {
-    await loginPage.loginToPage(adminDetails.invalidUsername, adminDetails.password);
-    await loginPage.verifyInvalidLoginMessage();
-  });
-
-  test('TC004 - Required all fields Login', async () => {
-    await loginPage.loginToPage('', '');
-    await loginPage.verifyRequiredUsernameMessage();
-    await loginPage.verifyRequiredPasswordMessage();
-  });
-
-  test('TC005 - Required username fields Login', async () => {
-    await loginPage.loginToPage('', adminDetails.password);
-    await loginPage.verifyRequiredUsernameMessage();
-  });
-
-  test('TC006 - Required password fields Login.', async () => {
-    await loginPage.loginToPage(adminDetails.username, '');
-    await loginPage.verifyRequiredPasswordMessage();
-  });
+      switch (expected) {
+        case 'invalidCredentials':
+          await loginPage.verifyInvalidLoginMessage();
+          break;
+        case 'requiredAll':
+          await loginPage.verifyRequiredUsernameMessage();
+          await loginPage.verifyRequiredPasswordMessage();
+          break;
+        case 'requiredUsername':
+          await loginPage.verifyRequiredUsernameMessage();
+          break;
+        case 'requiredPassword':
+          await loginPage.verifyRequiredPasswordMessage();
+          break;
+      }
+    });
+  }
 });

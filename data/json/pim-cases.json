@@ -1,0 +1,55 @@
+{
+  "TC07": {
+    "title": "TC07 - Verify Added Employee test",
+    "login": {
+      "username": "$credentials.admin.username",
+      "password": "$credentials.admin.password"
+    },
+    "filters": ["Job Title", "Include", "Sub Unit", "Employment Status"],
+    "employee": {
+      "firstName": "$faker.person.firstName",
+      "middleName": "$faker.person.middleName",
+      "lastName": "$faker.person.lastName",
+      "id": "$unique.employeeId"
+    }
+  },
+  "TC08": {
+    "title": "TC08 - Add Employee from topbar",
+    "login": {
+      "username": "$credentials.admin.username",
+      "password": "$credentials.admin.password"
+    },
+    "employee": {
+      "firstName": "$faker.person.firstName",
+      "middleName": "$faker.person.middleName",
+      "lastName": "$faker.person.lastName",
+      "id": "$unique.employeeId"
+    }
+  },
+  "TC09": {
+    "title": "TC09 - Search employee by ID",
+    "login": {
+      "username": "$credentials.admin.username",
+      "password": "$credentials.admin.password"
+    },
+    "employee": {
+      "firstName": "$faker.person.firstName",
+      "middleName": "$faker.person.middleName",
+      "lastName": "$faker.person.lastName",
+      "id": "$unique.employeeId"
+    }
+  },
+  "TC10": {
+    "title": "TC10 - Cancel Add Employee",
+    "login": {
+      "username": "$credentials.admin.username",
+      "password": "$credentials.admin.password"
+    },
+    "employee": {
+      "firstName": "$faker.person.firstName",
+      "middleName": "$faker.person.middleName",
+      "lastName": "$faker.person.lastName",
+      "id": "$unique.employeeId"
+    }
+  }
+}

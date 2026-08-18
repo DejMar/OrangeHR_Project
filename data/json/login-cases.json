@@ -1,0 +1,38 @@
+{
+  "TC001": {
+    "title": "TC001 - Login",
+    "username": "$credentials.admin.username",
+    "password": "$credentials.admin.password",
+    "expected": "success"
+  },
+  "TC002": {
+    "title": "TC002 - Invalid Password Login",
+    "username": "$credentials.admin.username",
+    "password": "$credentials.invalid.password",
+    "expected": "invalidCredentials"
+  },
+  "TC003": {
+    "title": "TC003 - Invalid Username Login",
+    "username": "$credentials.invalid.username",
+    "password": "$credentials.admin.password",
+    "expected": "invalidCredentials"
+  },
+  "TC004": {
+    "title": "TC004 - Required all fields Login",
+    "username": "",
+    "password": "",
+    "expected": "requiredAll"
+  },
+  "TC005": {
+    "title": "TC005 - Required username fields Login",
+    "username": "",
+    "password": "$credentials.admin.password",
+    "expected": "requiredUsername"
+  },
+  "TC006": {
+    "title": "TC006 - Required password fields Login.",
+    "username": "$credentials.admin.username",
+    "password": "",
+    "expected": "requiredPassword"
+  }
+}

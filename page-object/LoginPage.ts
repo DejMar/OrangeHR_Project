@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { warningMessages } from '../data/messages';
+import { messages } from '../data/testData';
 
 export class LoginPage {
     readonly page: Page;
@@ -30,15 +30,15 @@ export class LoginPage {
     }
 
     async verifyInvalidLoginMessage(): Promise<void> {
-        await expect(this.invalidCredentialsMessage).toHaveText(warningMessages.invalidCredentials);
+        await expect(this.invalidCredentialsMessage).toHaveText(messages.invalidCredentials);
     }
 
     async verifyRequiredUsernameMessage(): Promise<void> {
-        await expect(this.requiredUserNameFieldMessage).toHaveText(warningMessages.required);
+        await expect(this.requiredUserNameFieldMessage).toHaveText(messages.required);
     }
 
     async verifyRequiredPasswordMessage(): Promise<void> {
-        await expect(this.requiredUserNameFieldMessage).toHaveText(warningMessages.required);
+        await expect(this.requiredUserNameFieldMessage).toHaveText(messages.required);
     }
 
     async logoutFromPage(): Promise<void> {
