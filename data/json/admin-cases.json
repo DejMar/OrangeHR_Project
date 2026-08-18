@@ -1,0 +1,68 @@
+{
+  "TC11": {
+    "title": "TC11 - Search system user by username",
+    "login": {
+      "username": "$credentials.admin.username",
+      "password": "$credentials.admin.password"
+    },
+    "search": {
+      "username": "$credentials.admin.username"
+    },
+    "expected": {
+      "username": "$credentials.admin.username",
+      "userRole": "Admin",
+      "status": "Enabled"
+    }
+  },
+  "TC12": {
+    "title": "TC12 - Search system users by role",
+    "login": {
+      "username": "$credentials.admin.username",
+      "password": "$credentials.admin.password"
+    },
+    "search": {
+      "userRole": "Admin"
+    },
+    "expected": {
+      "username": "$credentials.admin.username",
+      "userRole": "Admin"
+    }
+  },
+  "TC13": {
+    "title": "TC13 - Search system users by status",
+    "login": {
+      "username": "$credentials.admin.username",
+      "password": "$credentials.admin.password"
+    },
+    "search": {
+      "status": "Enabled"
+    },
+    "expected": {
+      "username": "$credentials.admin.username",
+      "status": "Enabled"
+    }
+  },
+  "TC14": {
+    "title": "TC14 - Reset system user search filters",
+    "login": {
+      "username": "$credentials.admin.username",
+      "password": "$credentials.admin.password"
+    },
+    "search": {
+      "username": "$credentials.admin.username"
+    }
+  },
+  "TC15": {
+    "title": "TC15 - Navigate Admin topbar menus",
+    "login": {
+      "username": "$credentials.admin.username",
+      "password": "$credentials.admin.password"
+    },
+    "navigation": {
+      "jobItem": "Job Titles",
+      "nationalities": true,
+      "userManagementItem": "Users",
+      "addUser": true
+    }
+  }
+}

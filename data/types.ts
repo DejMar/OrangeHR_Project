@@ -31,6 +31,32 @@ export type PimCase = {
     employee: Employee;
 };
 
+export type AdminSearch = {
+    username?: string;
+    userRole?: string;
+    employeeName?: string;
+    status?: string;
+};
+
+export type AdminExpectedUser = {
+    username: string;
+    userRole?: string;
+    status?: string;
+};
+
+export type AdminCase = {
+    title: string;
+    login: Credentials;
+    search?: AdminSearch;
+    expected?: AdminExpectedUser;
+    navigation?: {
+        jobItem?: string;
+        userManagementItem?: string;
+        nationalities?: boolean;
+        addUser?: boolean;
+    };
+};
+
 export type Messages = {
     required: string;
     invalidCredentials: string;

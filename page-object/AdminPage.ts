@@ -187,6 +187,17 @@ export class AdminPage {
         await expect(row).toContainText(status);
     }
 
+    async verifyUserVisible(username: string, details?: { userRole?: string; status?: string }): Promise<void> {
+        const row = this.getUserRow(username);
+        await expect(row).toBeVisible();
+        if (details?.userRole) {
+            await expect(row).toContainText(details.userRole);
+        }
+        if (details?.status) {
+            await expect(row).toContainText(details.status);
+        }
+    }
+
     async verifyRecordsFound(): Promise<void> {
         await expect(this.recordsFoundLabel).toContainText('Records Found');
     }

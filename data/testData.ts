@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker/locale/en';
+import adminCases from './json/admin-cases.json';
 import credentials from './json/credentials.json';
 import loginCases from './json/login-cases.json';
 import messagesJson from './json/messages.json';
 import pimCases from './json/pim-cases.json';
-import type { LoginCase, Messages, PimCase } from './types';
+import type { AdminCase, LoginCase, Messages, PimCase } from './types';
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
@@ -11,6 +12,7 @@ export const messages: Messages = messagesJson;
 
 export type LoginCaseId = keyof typeof loginCases;
 export type PimCaseId = keyof typeof pimCases;
+export type AdminCaseId = keyof typeof adminCases;
 
 export function getLoginCase(caseId: LoginCaseId): LoginCase {
     return hydrate(loginCases[caseId]) as LoginCase;
@@ -30,6 +32,14 @@ export function getPimCase(caseId: PimCaseId): PimCase {
 
 export function getPimCaseTitle(caseId: PimCaseId): string {
     return pimCases[caseId].title;
+}
+
+export function getAdminCase(caseId: AdminCaseId): AdminCase {
+    return hydrate(adminCases[caseId]) as AdminCase;
+}
+
+export function getAdminCaseTitle(caseId: AdminCaseId): string {
+    return adminCases[caseId].title;
 }
 
 export function getCredentials(user: keyof typeof credentials) {
