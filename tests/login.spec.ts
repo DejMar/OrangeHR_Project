@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test } from '../fixtures/baseTest';
 import { LoginPage } from '../page-object/LoginPage';
 import { SharedSteps } from '../helper/SharedSteps';
 import { getLoginCase, getLoginCaseIds, getLoginCaseTitle } from '../data/testData';
@@ -17,23 +17,36 @@ test.describe('Login tests', () => {
   });
 
   for (const caseId of getLoginCaseIds()) {
-    test(getLoginCaseTitle(caseId), async () => {
+    test(getLoginCaseTitle(caseId), async ({ logger }) => {
       const { username, password, expected } = getLoginCase(caseId);
-      await loginPage.loginToPage(username, password);
+
+      await logger.step('Login to the application', async () => {
+        await loginPage.loginToPage(username, password);
+      });
 
       switch (expected) {
         case 'invalidCredentials':
-          await loginPage.verifyInvalidLoginMessage();
+          await logger.step('Verify invalid credentials message', async () => {
+            await loginPage.verifyInvalidLoginMessage();
+          });
           break;
         case 'requiredAll':
-          await loginPage.verifyRequiredUsernameMessage();
-          await loginPage.verifyRequiredPasswordMessage();
+          await logger.step('Verify required username message', async () => {
+            await loginPage.verifyRequiredUsernameMessage();
+          });
+          await logger.step('Verify required password message', async () => {
+            await loginPage.verifyRequiredPasswordMessage();
+          });
           break;
         case 'requiredUsername':
-          await loginPage.verifyRequiredUsernameMessage();
+          await logger.step('Verify required username message', async () => {
+            await loginPage.verifyRequiredUsernameMessage();
+          });
           break;
         case 'requiredPassword':
-          await loginPage.verifyRequiredPasswordMessage();
+          await logger.step('Verify required password message', async () => {
+            await loginPage.verifyRequiredPasswordMessage();
+          });
           break;
       }
     });
