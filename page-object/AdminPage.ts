@@ -3,6 +3,14 @@ import { expect, type Locator, type Page } from '@playwright/test';
 export class AdminPage {
     readonly page: Page;
     readonly adminLink: Locator;
+    readonly topbarMenu: Locator;
+    readonly userManagementTab: Locator;
+    readonly jobTab: Locator;
+    readonly organizationTab: Locator;
+    readonly qualificationsTab: Locator;
+    readonly nationalitiesTab: Locator;
+    readonly moreTab: Locator;
+    readonly helpButton: Locator;
     readonly pageTitle: Locator;
     readonly filterToggleButton: Locator;
     readonly usernameInput: Locator;
@@ -28,6 +36,14 @@ export class AdminPage {
     constructor(page: Page) {
         this.page = page;
         this.adminLink = page.getByRole('link', { name: 'Admin' });
+        this.topbarMenu = page.getByRole('navigation', { name: 'Topbar Menu' });
+        this.userManagementTab = this.topbarMenu.locator('.oxd-topbar-body-nav-tab-item').filter({ hasText: 'User Management' });
+        this.jobTab = this.topbarMenu.locator('.oxd-topbar-body-nav-tab-item').filter({ hasText: 'Job' });
+        this.organizationTab = this.topbarMenu.locator('.oxd-topbar-body-nav-tab-item').filter({ hasText: 'Organization' });
+        this.qualificationsTab = this.topbarMenu.locator('.oxd-topbar-body-nav-tab-item').filter({ hasText: 'Qualifications' });
+        this.nationalitiesTab = this.topbarMenu.getByRole('link', { name: 'Nationalities' });
+        this.moreTab = this.topbarMenu.locator('.oxd-topbar-body-nav-tab-item').filter({ hasText: 'More' });
+        this.helpButton = this.topbarMenu.getByRole('button', { name: 'Help' });
         this.pageTitle = page.getByRole('heading', { name: 'System Users' });
         this.filterToggleButton = page.locator('.oxd-table-filter-header-options .oxd-icon-button');
         this.usernameInput = page.locator("//div[div[label[text()='Username']]]//input");
@@ -54,6 +70,34 @@ export class AdminPage {
     async clickOnAdminLink(): Promise<void> {
         await this.adminLink.click();
         await expect(this.pageTitle).toBeVisible();
+    }
+
+    async clickNationalities(): Promise<void> {
+        await this.nationalitiesTab.click();
+    }
+
+    async clickHelp(): Promise<void> {
+        await this.helpButton.click();
+    }
+
+    async openUserManagement(item: string): Promise<void> {
+        await this.selectTopbarDropdown(this.userManagementTab, item);
+    }
+
+    async openJob(item: string): Promise<void> {
+        await this.selectTopbarDropdown(this.jobTab, item);
+    }
+
+    async openOrganization(item: string): Promise<void> {
+        await this.selectTopbarDropdown(this.organizationTab, item);
+    }
+
+    async openQualifications(item: string): Promise<void> {
+        await this.selectTopbarDropdown(this.qualificationsTab, item);
+    }
+
+    async openMore(item: string): Promise<void> {
+        await this.selectTopbarDropdown(this.moreTab, item);
     }
 
     async clickFilterToggle(): Promise<void> {
@@ -145,6 +189,11 @@ export class AdminPage {
 
     async verifyRecordsFound(): Promise<void> {
         await expect(this.recordsFoundLabel).toContainText('Records Found');
+    }
+
+    private async selectTopbarDropdown(tab: Locator, item: string): Promise<void> {
+        await tab.click();
+        await this.page.locator('.oxd-dropdown-menu a').filter({ hasText: item }).click();
     }
 
     private columnSortButton(column: string): Locator {
